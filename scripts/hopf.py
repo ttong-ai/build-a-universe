@@ -49,8 +49,8 @@ def hopf_fibration_circle(phi, theta, num_points, R=1.0, r=0.5):
 num_circles = 50
 num_points = 200
 R = 1.0
-r = 0.9
-theta = np.pi / 3
+r = 1.5
+theta = np.pi / 6
 axis_range = R + r + 0.2
 
 # Generate circle data
@@ -66,7 +66,7 @@ for i in range(num_circles):
 layout = go.Layout(scene=dict(xaxis_title="X", yaxis_title="Y", zaxis_title="Z",
                               xaxis=dict(range=[-axis_range, axis_range]),
                               yaxis=dict(range=[-axis_range, axis_range]),
-                              zaxis=dict(range=[-1, 1])))
+                              zaxis=dict(range=[-r, r])))
 fig = go.Figure(data=data, layout=layout)
 
 
