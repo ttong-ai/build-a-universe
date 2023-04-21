@@ -2,4 +2,4 @@
 
 ### Let's build a universe, one step at a time!
 
-[Hopf Fiberation](animation.gif)
+![Hopf Fiberation](animation.gif)
