@@ -26,3 +26,9 @@ In the context of general relativity, the Hopf fibration has been used to study 
 In algebraic topology and geometry, the Hopf fibration is an essential example of a fiber bundle, a more general concept that deals with the decomposition of high-dimensional spaces into lower-dimensional objects while preserving some of their topological properties. Studying the Hopf fibration and related fibrations has led to a deeper understanding of the geometry and topology of higher-dimensional spaces and the connections between them.
 
 By exploring the Hopf fibration and its applications, researchers have gained valuable insights into the structure and behavior of various physical systems and mathematical objects, demonstrating the power of abstract mathematical concepts in understanding the natural world.
+
+
+## Contributors
+[Thad Roberts](https://twitter.com/thadroberts)
+
+[Tony Tong](https://twitter.com/GoProAI)
