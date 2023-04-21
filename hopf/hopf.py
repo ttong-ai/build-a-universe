@@ -1,5 +1,10 @@
+import imageio
 import numpy as np
 import plotly.graph_objs as go
+import plotly.io as pio
+import os
+
+pwd = os.path.abspath(os.path.dirname(__file__))
 
 
 def cross_product_matrix(k):
@@ -45,6 +50,29 @@ def hopf_fibration_circle(phi, theta, num_points, R=1.0, r=0.5):
     return circle[0], circle[1], circle[2]
 
 
+def export_frame(frame, output_file):
+    pio.write_image(frame, output_file, format="png")
+
+
+def make_animation(frames, fig, output_file="animation.gif"):
+    frame_images = []
+    for i, frame in enumerate(frames):
+        if i <= 80:
+            continue
+        frame_data = fig.data
+        frame_layout = frame.layout
+        frame_fig = go.Figure(data=frame_data, layout=frame_layout)
+        output = os.path.join(pwd, f"frames/frame_{i:03d}.png")
+        export_frame(frame_fig, output)
+        frame_images.append(imageio.v2.imread(output))
+
+    imageio.mimsave(output_file, frame_images, duration=0.1)
+    # for i in range(len(frames)):
+    #     if i <= 80:
+    #         continue
+    #     os.remove(os.path.join(pwd, f"frames/frame_{i:03d}.png"))
+
+
 num_circles = 50
 num_points = 200
 R = 1.0
@@ -76,16 +104,47 @@ def main():
                 scene=dict(
                     camera=dict(
                         eye=dict(
-                            x=2 * np.sin(np.pi / 4) * np.cos(2 * np.pi * i / 180),
-                            y=2 * np.sin(np.pi / 4) * np.sin(2 * np.pi * i / 180),
-                            z=2 * np.cos(np.pi / 4),
+                            x=2 * np.sin(np.pi / 4) * np.cos(np.pi * i / 60),
+                            y=2 * np.sin(np.pi / 4) * np.sin(np.pi * i / 60),
+                            z=0.0,
                         )
                     )
                 )
             )
         )
-        for i in range(180)
+        if i <= 40
+        else go.Frame(
+            layout=dict(
+                scene=dict(
+                    camera=dict(
+                        eye=dict(
+                            x=2 * np.cos(np.pi / 4 + (np.pi / 12) * (i - 40) / 40),
+                            y=2 * np.cos(np.pi / 4 + (np.pi / 12) * (i - 40) / 40),
+                            z=2 * np.sin(np.pi / 4 + (np.pi / 12) * (i - 40) / 40),
+                        )
+                    )
+                )
+            )
+        )
+        if i <= 80
+        else go.Frame(
+            layout=dict(
+                scene=dict(
+                    camera=dict(
+                        eye=dict(
+                            x=2 * np.cos(np.pi * 3 / 8) * np.cos(np.pi * (i - 80) / 60 + np.pi / 2),
+                            y=2 * np.sin(np.pi * 3 / 8) * np.sin(np.pi * (i - 80) / 60 + np.pi / 2),
+                            z=2 * np.sin(np.pi * 3 / 8),
+                        )
+                    )
+                )
+            )
+        )
+        for i in range(140)
     ]
+
+    # Create the animation
+    make_animation(frames, fig, output_file="animation.gif")
 
     # Add frames to the figure
     fig.frames = frames
@@ -101,7 +160,8 @@ def main():
                 showactive=False,
                 buttons=[dict(label="Play", method="animate", args=[None, animation_settings])],
             )
-        ]
+        ],
+        showlegend=False,  # Add this line to hide the legend
     )
 
     # Show the interactive 3D plot
