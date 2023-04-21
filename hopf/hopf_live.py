@@ -27,6 +27,7 @@ app.layout = html.Div([
     ], style={"display": "flex", "justify-content": "space-around", "padding": "0 10px"})
 ])
 
+
 @app.callback(
     Output("graph", "figure"),
     [

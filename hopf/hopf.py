@@ -17,7 +17,7 @@ def hopf_fibration_circle(phi, theta, num_points, R=1.0, r=0.5):
     circle_center_y = R * np.sin(phi)
 
     x = r * np.cos(t)
-    y = 0.0 * np.ones_like(t)
+    y = 0.0 * np.ones(t.shape)
     z = r * np.sin(t)
     circle = np.array((x, y, z))
 
@@ -42,7 +42,6 @@ def hopf_fibration_circle(phi, theta, num_points, R=1.0, r=0.5):
     # Add center location
     circle[0] += circle_center_x
     circle[1] += circle_center_y
-
     return circle[0], circle[1], circle[2]
 
 
@@ -59,7 +58,6 @@ def main():
     data = []
     for i in range(num_circles):
         phi = 2 * np.pi * i / num_circles
-        # theta = np.pi / 4
         x, y, z = hopf_fibration_circle(phi, theta, num_points, R=R, r=r)
         trace = go.Scatter3d(x=x, y=y, z=z, mode="lines")
         data.append(trace)
@@ -70,7 +68,6 @@ def main():
                                   yaxis=dict(range=[-axis_range, axis_range]),
                                   zaxis=dict(range=[-r, r])))
     fig = go.Figure(data=data, layout=layout)
-
 
     # Create frames for the animation
     frames = [
@@ -95,7 +92,6 @@ def main():
 
     # Add animation settings
     animation_settings = dict(frame=dict(duration=100, redraw=True), fromcurrent=True, showlegend=False)
-
 
     # Update layout to include the animation settings
     fig.update_layout(
