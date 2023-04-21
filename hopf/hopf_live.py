@@ -7,18 +7,25 @@ from hopf import hopf_fibration_circle, cross_product_matrix, num_points, num_ci
 
 app = dash.Dash(__name__)
 
-app.layout = html.Div(
-    [
-        dcc.Graph(id="graph"),
-        html.Label("Number of Circles"),
-        dcc.Slider(id="num_circles", min=1, max=100, value=50, step=1),
-        html.Label("r"),
-        dcc.Slider(id="r", min=0.1, max=2.0, value=1.5, step=0.1),
-        html.Label("theta"),
-        dcc.Slider(id="theta", min=0, max=2 * np.pi, value=np.pi / 6, step=0.01),
-    ]
-)
-
+app.layout = html.Div([
+    html.Div([
+        dcc.Graph(id="graph", style={"height": "85vh"})
+    ]),
+    html.Div([
+        html.Div([
+            html.Label("Number of Circles"),
+            dcc.Slider(id="num_circles", min=1, max=100, value=50, step=1),
+        ], style={"width": "30%", "padding": "0 10px"}),
+        html.Div([
+            html.Label("r"),
+            dcc.Slider(id="r", min=0.1, max=2.0, value=1.5, step=0.1),
+        ], style={"width": "30%", "padding": "0 10px"}),
+        html.Div([
+            html.Label("theta"),
+            dcc.Slider(id="theta", min=0, max=2 * np.pi, value=np.pi / 6, step=0.01),
+        ], style={"width": "30%", "padding": "0 10px"}),
+    ], style={"display": "flex", "justify-content": "space-around", "padding": "0 10px"})
+])
 
 @app.callback(
     Output("graph", "figure"),
