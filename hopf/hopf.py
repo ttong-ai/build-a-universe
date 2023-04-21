@@ -87,7 +87,7 @@ def main():
     for i in range(num_circles):
         phi = 2 * np.pi * i / num_circles
         x, y, z = hopf_fibration_circle(phi, theta, num_points, R=R, r=r)
-        trace = go.Scatter3d(x=x, y=y, z=z, mode="lines")
+        trace = go.Scatter3d(x=x, y=y, z=z, mode="lines", showlegend=False)
         data.append(trace)
 
     # Create layout and figure
@@ -143,9 +143,6 @@ def main():
         for i in range(140)
     ]
 
-    # Create the animation
-    make_animation(frames, fig, output_file="animation.gif")
-
     # Add frames to the figure
     fig.frames = frames
 
@@ -163,6 +160,9 @@ def main():
         ],
         showlegend=False,  # Add this line to hide the legend
     )
+
+    # Create the animation
+    make_animation(frames, fig, output_file="animation.gif")
 
     # Show the interactive 3D plot
     fig.show()
