@@ -162,7 +162,7 @@ def main():
     )
 
     # Create the animation
-    make_animation(frames, fig, output_file="animation.gif")
+    # make_animation(frames, fig, output_file="animation.gif")
 
     # Show the interactive 3D plot
     fig.show()
