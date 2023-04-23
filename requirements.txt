@@ -1,4 +1,5 @@
 # requirementx.txt
+black==22.8.0
 dash==2.7.1
 dash-bootstrap-components==1.4.1
 dash-core-components==2.0.0
