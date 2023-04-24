@@ -1,6 +1,7 @@
 from decimal import Decimal, getcontext
 import math
 from mpmath import mp, mpc
+from typing import Union
 
 # Set the desired precision
 getcontext().prec = 30  # 30 decimal places
@@ -10,8 +11,14 @@ EXP_TERMS = 100
 LN_TERMS = 100
 
 
-def fmt(v: Decimal, precision: int = 14):
-    return f"{v:.{precision}E}"
+def fmt(v: Union[Decimal, "DecimalComplex"], precision: int = 14):
+    if isinstance(v, Decimal):
+        return f"{v:.{precision}E}"
+    elif isinstance(v, DecimalComplex):
+        if v.imag >= 0:
+            return f"{fmt(v.real)} + {fmt(v.imag)}j"
+        else:
+            return f"{fmt(v.real)} - {fmt(-v.imag)}j"
 
 
 class DecimalComplex:
@@ -68,8 +75,8 @@ class DecimalComplex:
             return DecimalComplex(real, imag)
         elif isinstance(other, (float, int)):
             denominator = Decimal(other) ** 2
-            real = self.real * other / denominator
-            imag = self.imag * other / denominator
+            real = self.real * Decimal(other) / denominator
+            imag = self.imag * Decimal(other) / denominator
             return DecimalComplex(real, imag)
 
     def polar(self):
@@ -82,28 +89,6 @@ class DecimalComplex:
         real = r * Decimal(math.cos(theta))
         imag = r * Decimal(math.sin(theta))
         return DecimalComplex(real, imag)
-
-    @staticmethod
-    def exp_taylor(x, terms=EXP_TERMS):
-        result = Decimal(1)
-        term = Decimal(1)
-        for i in range(1, terms + 1):
-            term *= x / i
-            result += term
-        return result
-
-    @staticmethod
-    def ln_taylor(x, terms=LN_TERMS):
-        if x <= 0:
-            raise ValueError("Natural logarithm is undefined for non-positive numbers.")
-        y = (x - 1) / (x + 1)
-        y_squared = y * y
-        result = Decimal(0)
-        term = y
-        for i in range(1, terms * 2, 2):
-            result += term / i
-            term *= y_squared
-        return result * 2
 
     def __pow__(self, other):
         if isinstance(other, int):
@@ -118,10 +103,10 @@ class DecimalComplex:
         elif isinstance(other, (Decimal, float)):
             if isinstance(other, float):
                 other = Decimal(other)
-            r, theta = self.polar()
-            r = r ** other
-            theta = theta * other
-            return DecimalComplex.from_polar(r, theta)
+            base = mpc(str(self.real), str(self.imag))
+            exponent = mpc(str(other), "0.0")
+            result = base ** exponent
+            return DecimalComplex(result.real, result.imag)
         elif isinstance(other, DecimalComplex):
             base = mpc(str(self.real), str(self.imag))
             exponent = mpc(str(other.real), str(other.imag))
