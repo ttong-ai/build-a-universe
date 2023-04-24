@@ -13,7 +13,7 @@ constants = {
     'reduced_planck_constant': 1.054571817e-34,  # Js
     'gravitational_constant': 6.67430e-11,  # m^3/kg/s^2
     'electron_charge': 1.602176634e-19,  # C
-    'electron_mass': 9.10938356e-31,  # kg
+    'electron_mass': 9.1093837015e-31,  # kg
     'proton_mass': 1.67262192369e-27,  # kg
     'neutron_mass': 1.67492749804e-27,  # kg
     'avogadro_number': 6.02214076e23,  # mol^-1
