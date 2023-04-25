@@ -74,8 +74,10 @@ special_constants = {
 print("Common Physical Constants:")
 for name, value in constants.items():
     print(f"{name}: {value}")
+print()
 
 # Printing Planck units
 print("\nPlanck Units:")
 for name, value in planck_units.items():
     print(f"{name}: {value}")
+print()
